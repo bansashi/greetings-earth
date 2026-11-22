@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>greetings, earth! ~ a tidepool of small things</title>
+<meta name="description" content="minnow's tidepool: old games, slow manga, ambient music and field recordings, pixel art and little web toys.">
+<link rel="icon" id="favicon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Pixelify+Sans:wght@400;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="g0">
+<div id="osbar" aria-hidden="true"></div>
+
+<header class="masthead">
+  <div class="banner">
+    <canvas id="scene" aria-hidden="true"></canvas>
+    <div class="titles">
+      <h1 id="site-title">greetings, earth!</h1>
+      <p id="site-sub">a tidepool of small things — old games, slow manga &amp; sounds recorded near water</p>
+    </div>
+  </div>
+  <nav class="topnav" aria-label="site">
+    <a href="#" data-go="top">home</a>
+    <a href="#">games</a>
+    <a href="#">manga</a>
+    <a href="#">sounds</a>
+    <a href="#">pixels</a>
+    <a href="#">guestbook</a>
+    <span id="navtip" class="navtip" role="status"></span>
+  </nav>
+</header>
+
+<div class="wrap">
+  <main id="main">
+    <div id="feed"></div>
+    <div id="loader" class="loader"><span class="spin" aria-hidden="true"><i></i><i></i><i></i></span><span class="load-text">loading…</span></div>
+    <div id="sentinel"></div>
+  </main>
+
+  <aside id="sidebar">
+    <section class="widget about">
+      <h3><span class="wt">about</span></h3>
+      <div class="about-row"><canvas id="avatar" width="24" height="24" aria-hidden="true"></canvas><p id="sb-about"></p></div>
+      <p class="mood">mood: <span id="sb-mood"></span></p>
+    </section>
+
+    <section class="widget listening">
+      <h3><span class="wt">now listening</span></h3>
+      <p id="sb-now">nothing (the window is open)</p>
+      <div class="row"><button class="btn small" id="tp-btn">▶ play tidepool (for sleep)</button><button class="btn small" id="sb-hush">hush</button></div>
+    </section>
+
+    <section class="widget currently">
+      <h3><span class="wt">currently</span></h3>
+      <dl>
+        <dt>playing</dt><dd id="sb-playing"></dd>
+        <dt>reading</dt><dd id="sb-reading"></dd>
+        <dt>watching</dt><dd id="sb-watching"></dd>
+      </dl>
+    </section>
+
+    <section class="widget counter">
+      <h3><span class="wt">visitors</span></h3>
+      <div class="hits" id="sb-counter">004127</div>
+      <p class="tiny" id="sb-countcap">friends have visited the tidepool ✿</p>
+    </section>
+
+    <section class="widget frogw">
+      <h3><span class="wt">frog</span></h3>
+      <div class="frog-row"><canvas id="frog" width="12" height="9" title="frog"></canvas><p><span id="sb-frogcap">click the frog!</span><br><span class="tiny">clicked <b id="sb-frogn">0</b> times</span></p></div>
+    </section>
+
+    <section class="widget tide">
+      <h3><span class="wt">tide chart</span></h3>
+      <p id="sb-tide">tide: +0.2 m</p>
+      <div class="tidebar"><b id="sb-tidebar"></b></div>
+    </section>
+
+    <section class="widget buttons">
+      <h3><span class="wt">buttons</span></h3>
+      <div id="sb-buttons" class="badges"></div>
+    </section>
+
+    <section class="widget ring">
+      <h3><span class="wt">webring</span></h3>
+      <p id="sb-ring"></p>
+    </section>
+
+    <section class="widget archive">
+      <h3><span class="wt">archive</span></h3>
+      <ul id="sb-archive"></ul>
+    </section>
+  </aside>
+</div>
+
+<div id="ghosts" aria-hidden="true"></div>
+<div id="trail" aria-hidden="true"></div>
+<div id="scan" aria-hidden="true"></div>
+<div id="vig" aria-hidden="true"></div>
+<div id="popups"></div>
+<div id="flash" aria-hidden="true"></div>
+
+<script src="js/util.js"></script>
+<script src="js/corrupt.js"></script>
+<script src="js/sprites.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/toys.js"></script>
+<script src="js/posts.js"></script>
+<script src="js/endless.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
