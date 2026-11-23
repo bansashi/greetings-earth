@@ -4,104 +4,158 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>greetings, earth! ~ a tidepool of small things</title>
-<meta name="description" content="minnow's tidepool: old games, slow manga, ambient music and field recordings, pixel art and little web toys.">
+<meta name="description" content="minnow's tidepool: old games, slow manga, ambient music and field recordings, pixel art, shrines and little web toys.">
 <link rel="icon" id="favicon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Pixelify+Sans:wght@400;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="g0">
-<div id="osbar" aria-hidden="true"></div>
+<body>
 
-<header class="masthead">
-  <div class="banner">
-    <canvas id="scene" aria-hidden="true"></canvas>
-    <div class="titles">
-      <h1 id="site-title">greetings, earth!</h1>
-      <p id="site-sub">a tidepool of small things — old games, slow manga &amp; sounds recorded near water</p>
-    </div>
+<div id="splash" role="dialog" aria-label="welcome">
+  <div class="splash-box">
+    <canvas id="splash-fish" width="16" height="9" aria-hidden="true"></canvas>
+    <p class="splash-title">~ greetings, earth! ~</p>
+    <p id="splash-text">a tidepool of small things</p>
+    <button class="enter" id="enter">enter the tidepool</button>
+    <p class="splash-small">best viewed at 1024&times;768 &middot; sound optional &middot; no ads, just fish</p>
   </div>
-  <nav class="topnav" aria-label="site">
-    <a href="#" data-go="top">home</a>
-    <a href="#">games</a>
-    <a href="#">manga</a>
-    <a href="#">sounds</a>
-    <a href="#">pixels</a>
-    <a href="#">guestbook</a>
-    <span id="navtip" class="navtip" role="status"></span>
-  </nav>
-</header>
-
-<div class="wrap">
-  <main id="main">
-    <div id="feed"></div>
-    <div id="loader" class="loader"><span class="spin" aria-hidden="true"><i></i><i></i><i></i></span><span class="load-text">loading…</span></div>
-    <div id="sentinel"></div>
-  </main>
-
-  <aside id="sidebar">
-    <section class="widget about">
-      <h3><span class="wt">about</span></h3>
-      <div class="about-row"><canvas id="avatar" width="24" height="24" aria-hidden="true"></canvas><p id="sb-about"></p></div>
-      <p class="mood">mood: <span id="sb-mood"></span></p>
-    </section>
-
-    <section class="widget listening">
-      <h3><span class="wt">now listening</span></h3>
-      <p id="sb-now">nothing (the window is open)</p>
-      <div class="row"><button class="btn small" id="tp-btn">▶ play tidepool (for sleep)</button><button class="btn small" id="sb-hush">hush</button></div>
-    </section>
-
-    <section class="widget currently">
-      <h3><span class="wt">currently</span></h3>
-      <dl>
-        <dt>playing</dt><dd id="sb-playing"></dd>
-        <dt>reading</dt><dd id="sb-reading"></dd>
-        <dt>watching</dt><dd id="sb-watching"></dd>
-      </dl>
-    </section>
-
-    <section class="widget counter">
-      <h3><span class="wt">visitors</span></h3>
-      <div class="hits" id="sb-counter">004127</div>
-      <p class="tiny" id="sb-countcap">friends have visited the tidepool ✿</p>
-    </section>
-
-    <section class="widget frogw">
-      <h3><span class="wt">frog</span></h3>
-      <div class="frog-row"><canvas id="frog" width="12" height="9" title="frog"></canvas><p><span id="sb-frogcap">click the frog!</span><br><span class="tiny">clicked <b id="sb-frogn">0</b> times</span></p></div>
-    </section>
-
-    <section class="widget tide">
-      <h3><span class="wt">tide chart</span></h3>
-      <p id="sb-tide">tide: +0.2 m</p>
-      <div class="tidebar"><b id="sb-tidebar"></b></div>
-    </section>
-
-    <section class="widget buttons">
-      <h3><span class="wt">buttons</span></h3>
-      <div id="sb-buttons" class="badges"></div>
-    </section>
-
-    <section class="widget ring">
-      <h3><span class="wt">webring</span></h3>
-      <p id="sb-ring"></p>
-    </section>
-
-    <section class="widget archive">
-      <h3><span class="wt">archive</span></h3>
-      <ul id="sb-archive"></ul>
-    </section>
-  </aside>
 </div>
 
-<div id="ghosts" aria-hidden="true"></div>
+<div id="container">
+  <header id="header">
+    <div class="banner">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <div class="titles">
+        <h1><a href="#" data-route="home">greetings, earth!</a></h1>
+        <p id="tagline">a tidepool of small things</p>
+      </div>
+    </div>
+    <div class="welcome"><marquee id="marquee" scrollamount="3"></marquee></div>
+    <nav id="nav" aria-label="site">
+      <a href="#" data-route="home">home</a>
+      <a href="#about" data-route="about">about me</a>
+      <a href="#shrines" data-route="shrines">shrines</a>
+      <a href="#links" data-route="links">links</a>
+      <a href="#guestbook" data-route="guestbook">guestbook</a>
+      <a href="#listen" data-route="listen" id="nav-listen" hidden>listen</a>
+      <button id="sidebar-toggle" type="button" aria-expanded="false">sidebar ▾</button>
+    </nav>
+  </header>
+
+  <div id="columns">
+    <main id="main">
+      <div id="blog">
+        <div id="feed"></div>
+        <div id="loader" class="loader"><span class="spin" aria-hidden="true"><i></i><i></i><i></i></span><span class="load-text">loading…</span></div>
+        <div id="sentinel"></div>
+      </div>
+      <div id="page" hidden></div>
+    </main>
+
+    <aside id="sidebar">
+      <section class="widget">
+        <h2>about me</h2>
+        <div class="about-row"><canvas id="avatar" width="24" height="24" aria-hidden="true"></canvas>
+          <div><b>minnow</b><br><span class="small" id="sb-where">a rainy town by a creek</span></div></div>
+        <p id="sb-about"></p>
+        <a href="#about" data-route="about" class="small">view my complete profile</a>
+      </section>
+
+      <section class="widget status">
+        <h2>status</h2>
+        <p><b>minnow</b> is: <span id="sb-status"></span><br><span class="small" id="sb-status-when"></span></p>
+      </section>
+
+      <section class="widget">
+        <h2>shoutbox</h2>
+        <div id="shoutbox"></div>
+      </section>
+
+      <section class="widget">
+        <h2>now listening</h2>
+        <p id="sb-now">nothing (the window is open)</p>
+        <p class="row"><button class="mini" id="tp-btn">&#9654; play tidepool (for sleep)</button> <button class="mini" id="sb-hush">hush</button></p>
+      </section>
+
+      <section class="widget currently">
+        <h2>currently</h2>
+        <p>playing: <i id="sb-playing"></i><br>reading: <i id="sb-reading"></i><br>watching: <i id="sb-watching"></i><br>mood: <span id="sb-mood"></span></p>
+      </section>
+
+      <section class="widget">
+        <h2>site updates</h2>
+        <ul id="sb-updates" class="updates"></ul>
+      </section>
+
+      <section class="widget">
+        <h2>to do</h2>
+        <ul id="sb-todo" class="todo"></ul>
+      </section>
+
+      <section class="widget">
+        <h2>recent comments</h2>
+        <ul id="sb-recent" class="recent"></ul>
+      </section>
+
+      <section class="widget">
+        <h2>my blog list</h2>
+        <ul id="sb-blogs" class="blogs"></ul>
+      </section>
+
+      <section class="widget counter">
+        <h2>visitors</h2>
+        <div class="hits" id="sb-counter">004127</div>
+        <p class="small center"><span id="sb-countcap">you are visitor #</span><br>users online: <b id="sb-online">1</b></p>
+      </section>
+
+      <section class="widget">
+        <h2>pet the frog</h2>
+        <div class="frog-row"><canvas id="frog" width="12" height="9" title="frog"></canvas><p class="small"><span id="sb-frogcap">click the frog!</span><br>clicked <b id="sb-frogn">0</b> times</p></div>
+      </section>
+
+      <section class="widget">
+        <h2>tide chart</h2>
+        <p class="small" id="sb-tide">tide: +0.2 m</p>
+        <div class="tidebar"><b id="sb-tidebar"></b></div>
+      </section>
+
+      <section class="widget">
+        <h2>stamps</h2>
+        <div id="sb-stamps" class="stamps"></div>
+        <div id="sb-blinkies" class="blinkies"></div>
+      </section>
+
+      <section class="widget">
+        <h2>buttons</h2>
+        <div id="sb-buttons" class="badges"></div>
+        <p class="small"><a href="#links" data-route="links">link to me!</a></p>
+      </section>
+
+      <section class="widget">
+        <h2>webring</h2>
+        <p class="center small" id="sb-ring"></p>
+      </section>
+
+      <section class="widget">
+        <h2>blog archive</h2>
+        <ul id="sb-archive" class="archive"></ul>
+      </section>
+
+      <section class="widget">
+        <p class="center"><canvas id="construction" width="88" height="31" aria-hidden="true"></canvas><br><span class="small" id="sb-built">this site is always under construction</span></p>
+      </section>
+    </aside>
+  </div>
+
+  <footer id="footer">
+    <p>&copy; 2007 minnow &middot; all fish reserved &middot; made in notepad <a href="#below" data-route="below" class="dot" aria-label="below">.</a></p>
+    <p class="small">subscribe to: posts (atom) &middot; <span id="sb-lastupdate">last updated: sunday, june 3, 2007</span></p>
+  </footer>
+</div>
+
 <div id="trail" aria-hidden="true"></div>
-<div id="scan" aria-hidden="true"></div>
-<div id="vig" aria-hidden="true"></div>
-<div id="popups"></div>
-<div id="flash" aria-hidden="true"></div>
 
 <script src="js/util.js"></script>
 <script src="js/corrupt.js"></script>
@@ -111,6 +165,9 @@
 <script src="js/toys.js"></script>
 <script src="js/posts.js"></script>
 <script src="js/endless.js"></script>
+<script src="js/social.js"></script>
+<script src="js/widgets.js"></script>
+<script src="js/pages.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

@@ -475,59 +475,8 @@
     });
   };
 
-  /* ================= guestbook ================= */
-  const PRESET = [
-    { name: 'mossbat', msg: 'hi minnow. proud of you for finishing this.', when: 'july 30' },
-    { name: '~pearl~', msg: 'bloop says hi', when: 'july 29' },
-    { name: 'kappa_kun', msg: 'first!!! (not first)', when: 'july 29' },
-    { name: 'dial-up-dan', msg: 'the ecco post. yes. exactly.', when: 'july 2' },
-    { name: 'sakura_fishy', msg: 'cute site!!! linked u from my buttons page ✿ ✿ ✿', when: 'june 30' }
-  ];
-  T.guestbook = function (host, opts) {
-    const late = opts.mode === 'late';
-    const form = GE.el('form', 'gb-form');
-    form.innerHTML = `<input name="n" maxlength="24" placeholder="${late ? 'you already signed' : 'your name'}" aria-label="your name" autocomplete="nickname"><input name="m" maxlength="140" placeholder="${late ? 'say it again' : 'say hi!'}" aria-label="message"><button class="btn" type="submit">${late ? 'SIGN' : 'sign ✎'}</button>`;
-    const list = GE.el('ol', 'gb-list');
-    host.appendChild(form); host.appendChild(list);
-    const nameIn = form.querySelector('[name=n]');
-    if (GE.getName()) nameIn.value = GE.getName();
-    const mine = () => GE.store.get('gb', []) || [];
-    function li(name, msg, when, cls) {
-      const l = GE.el('li', cls || '');
-      const b = GE.el('b'); b.textContent = name;
-      const w = GE.el('span', 'when'); w.textContent = when;
-      const p = GE.el('p'); p.textContent = msg;
-      l.appendChild(b); l.appendChild(w); l.appendChild(p);
-      return l;
-    }
-    function render() {
-      list.innerHTML = '';
-      if (!late) {
-        mine().slice().reverse().forEach((e) => list.appendChild(li(e.name, e.msg, GE.fmtTime(new Date(e.ts)) + ' · just now-ish', 'mine')));
-        PRESET.forEach((e) => list.appendChild(li(e.name, e.msg, e.when)));
-      } else {
-        const n = GE.getName() || 'visitor';
-        const lines = ["i'm still here", "i'm still here", 'is anyone reading this', "it's warm", "i can't find the top of the page", n, n, 'LET ME', 'the line is above my head', "i'm still here"];
-        mine().forEach((e) => lines.unshift(e.msg.split('').reverse().join('')));
-        const now = Date.now();
-        lines.forEach((m, i) => list.appendChild(li(n, m, GE.fmtTime(new Date(now + (3 - i) * 41 * 60000)) + (i < 3 ? ' · later' : i === 3 ? ' · now' : ''), 'mine')));
-        list.appendChild(li('mossbat', 'minnow please', 'august 30'));
-      }
-    }
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const n = nameIn.value.trim().slice(0, 24) || 'visitor';
-      let m = form.querySelector('[name=m]').value.trim().slice(0, 140) || 'hi!';
-      if (late) m = "i'm still here";
-      GE.store.set('name', n);
-      const arr = mine(); arr.push({ name: n, msg: m, ts: Date.now() }); GE.store.set('gb', arr.slice(-20));
-      form.querySelector('[name=m]').value = '';
-      document.dispatchEvent(new CustomEvent('ge-name'));
-      render();
-    });
-    render();
-    cap(host, late ? 'I REMEMBER EVERYONE.' : 'stored only in your own browser. i\'ll remember you.');
-  };
+  /* ================= guestbook (embedded, read-only) ================= */
+  T.guestbook = function (host, opts) { GE.social.guestbook(host, { mode: opts.mode, readonly: true }); };
 
   /* ================= the creek (ripple) ================= */
   T.ripple = function (host) {

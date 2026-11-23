@@ -32,7 +32,7 @@
     let type;
     if (n === 0) type = 'lure';
     else {
-      const w = [['transmission', 4], ['code', 2], ['rerun', 3], ['lure', lastType === 'lure' ? 0 : 1.2], ['personal', 1.5], ['depth', 1.2], ['eyes', 1]];
+      const w = [['transmission', 3.5], ['code', 1.6], ['rerun', 2.5], ['lure', lastType === 'lure' ? 0 : 1.2], ['personal', 1.3], ['depth', 1], ['eyes', 1], ['removed', 1.6], ['draft', 1.2], ['broken', 1.2]];
       let tot = w.reduce((s, x) => s + x[1], 0), r = Math.random() * tot;
       for (const x of w) { r -= x[1]; if (r <= 0) { type = x[0]; break; } }
       if (type === lastType) type = 'transmission';
@@ -43,6 +43,17 @@
       const L = n === 0 ? LURES[1] : GE.pick(LURES);
       return Object.assign({ title: L.title, body: L.body + `<p class="tiny nocorrupt">do not scroll further.</p>`, tags: ['meta'], cls: 'lure', comments: [] },
         { date: 'sunday, june 3, 2007', time: '2:14 pm', mood: '☀ sunny-ish', music: 'Hiroshi Yoshimura — Music for Nine Postcards' });
+    }
+    if (type === 'removed') {
+      return Object.assign({ title: '', body: `<p class="removed">This post has been removed by the author.</p>`, cls: 'lure', comments: GE.chance(0.4) ? [{ who: 'you', when: '{time}', text: 'what did it say', you: true }] : [] }, meta, { mood: '', music: '' });
+    }
+    if (type === 'draft') {
+      const bits = ['TODO: finish ecco shrine', 'title?', 'remember to', 'the line is', 'tell mossbat', 'what was this site', 'sleep', 'a tidepool is the part of the sea that got left behind'];
+      return Object.assign({ title: 'Untitled draft', cls: 'lure', body: `<p>${bits.slice(0, GE.randi(2, 5)).map((b) => GE.esc(b)).join('<br><br>')}<br><br>${GE.esc(GE.pick(GE.ORACLE))}</p><p class="small">[draft, auto-saved ${n * 41} times]</p>`, comments: [] }, meta);
+    }
+    if (type === 'broken') {
+      const imgs = ['tidepool_41.jpg', 'room_final_FINAL.jpg', 'bloop_now.jpg', 'line_on_wall_3.jpg', 'IMG_0041.JPG', 'you.jpg'];
+      return Object.assign({ cls: 'lure', title: GE.pick(['pics!!', 'photos from tonight', 'look', 'the room (photos)']), body: `<p>${GE.pick(['uploaded some photos', 'finally got the camera working', 'you need to see this'])}:</p><div class="moved">this image has been moved or deleted.</div><span class="broken">${GE.pick(imgs)}</span><br><span class="broken">${GE.pick(imgs)}</span>`, comments: [] }, meta);
     }
     if (type === 'transmission') {
       let lines = '';

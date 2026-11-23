@@ -79,7 +79,7 @@
     }
 
     function tick(t, dt) {
-      const d = GE.dd();
+      const real = GE.dd(); const d = 0; // the banner keeps its colours; only the water and the sun change
       const key = Math.round(d * 60);
       if (key !== skyKey) { skyKey = key; sctx.putImageData(ditherSky(sctx, W, H, skyStops(d), 0, 64), 0, 0); }
       ctx.drawImage(sky, 0, 0);
@@ -99,11 +99,11 @@
 
       // sun becomes an eye
       const sunX = 238, sunY = 26;
-      if (d < 0.5) {
+      if (real < 0.82) {
         GE.disc(ctx, sunX, sunY, 14, 14, GE.mix('#fff1c4', '#f0b880', d * 2));
         GE.disc(ctx, sunX, sunY, 11, 11, GE.mix('#fffbe6', '#ffd89a', d * 2));
       } else {
-        const open = GE.smooth(0.5, 0.6, d);
+        const open = GE.smooth(0.82, 0.9, real);
         nextBlink -= dt; if (nextBlink < 0) { blink = 160; nextBlink = GE.rand(2500, 7000); }
         blink = Math.max(0, blink - dt);
         const ry = Math.max(1, Math.round(8 * open * (blink > 0 ? 0.15 : 1)));
@@ -148,11 +148,11 @@
       palms.forEach((p) => palm(p, 70, t, d));
 
       // water rises
-      const wl = Math.round(72 - GE.smooth(0.25, 1, d) * 46);
+      const wl = Math.round(72 - GE.smooth(0.25, 1, real) * 30);
       const wA = GE.ramp([[0, '#56b9c9'], [0.5, '#3f7f86'], [0.75, '#123034'], [0.85, '#0000aa'], [1, '#00002a']], d);
       const wB = GE.ramp([[0, '#2f8fa6'], [0.5, '#2a5a60'], [0.75, '#0a1a1c'], [0.85, '#000055'], [1, '#000000']], d);
-      if (waterKey !== key) {
-        waterKey = key;
+      if (waterKey !== wl) {
+        waterKey = wl;
         const wc = water.getContext('2d');
         wc.clearRect(0, 0, W, H);
         const A = GE.hex2rgb(wA), B = GE.hex2rgb(wB);
@@ -184,7 +184,7 @@
         });
       }
       // sun reflection
-      ctx.fillStyle = d < 0.5 ? '#fff4d0' : '#ff5555';
+      ctx.fillStyle = real < 0.82 ? '#fff4d0' : '#ff5555';
       for (let y = wl + 1; y < H; y += 3) {
         const w = 10 - (y - wl) * 0.15 + Math.sin(t * 0.004 + y) * 2;
         if (w > 1) ctx.fillRect(Math.round(sunX - w / 2 + Math.sin(t * 0.003 + y) * 2), y, Math.round(w), 1);
@@ -199,7 +199,7 @@
         if (k >= 1) jumper = null;
         else {
           const jx = jumper.x + jumper.dir * k * 18, jy = wl - Math.sin(k * Math.PI) * 14;
-          if (d < 0.6) {
+          if (real < 0.7) {
             ctx.fillStyle = '#f4a259'; ctx.fillRect(Math.round(jx), Math.round(jy), 4, 2);
             ctx.fillStyle = '#b9522e'; ctx.fillRect(Math.round(jx) + (jumper.dir > 0 ? -1 : 4), Math.round(jy), 1, 2);
           } else {
